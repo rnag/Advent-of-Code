@@ -5,6 +5,8 @@ Link:
     https://adventofcode.com/2024/day/1
 
 """
+from pathlib import Path
+
 
 location_ids = """
 3   4
@@ -14,6 +16,10 @@ location_ids = """
 3   9
 3   3
 """
+
+# TODO: Update filename `input` and uncomment once ready!
+# INPUT = open(Path(__file__).parent / "input").read()
+
 
 def remap(loc_ids) -> tuple[list[int], list[int]]:
     """
