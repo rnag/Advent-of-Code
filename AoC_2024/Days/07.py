@@ -9,7 +9,7 @@ import itertools
 from pathlib import Path
 from typing import List, Tuple
 
-INPUT = """
+DEMO_INPUT = """
 190: 10 19
 3267: 81 40 27
 83: 17 5
@@ -20,9 +20,6 @@ INPUT = """
 21037: 9 7 18 13
 292: 11 6 16 20
 """
-
-# TODO: Update filename `input` and uncomment once ready!
-# INPUT = open(Path(__file__).parent / "input").read()
 
 
 def remap(sections: str) -> list[tuple[int, list[int]]]:
@@ -112,10 +109,28 @@ def calibration_result_with_concat_operator(equations: list[tuple[int, list[int]
     return sum_of_test_values
 
 
-if __name__ == '__main__':
+def solve(input_file):
+
+    if input_file:
+        demo = False
+        print(f"Solving with input file {input_file}")
+        try:
+            INPUT = open(input_file).read()
+        except FileNotFoundError:
+            print('File not found, using default ...')
+            INPUT = open(Path(__file__).parent.parent / 'Inputs' / '07').read()
+    else:
+        demo = True
+        INPUT = DEMO_INPUT
+
+    print("Solving Day 7 Problem! 🎄")
 
     _equations = remap(INPUT)
     # Part 1
     print('Part 1:  ', calibration_result_of_true_equations(_equations))
     # Part 2
     print('Part 2:  ', calibration_result_with_concat_operator(_equations))
+
+
+if __name__ == '__main__':
+    solve()

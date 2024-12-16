@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+name = "Advent-of-Code"
+version = "0.1"
+description = "Solutions for Advent of Code 2024"
+authors = [
+    { name = "Ritvik Nag", email = "me@ritviknag.com" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+keywords = ["advent of code", "python", "2024", "challenges"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[tool.hatch.version]
+path = "AoC_2024/__init__.py"
+
+[tool.hatch.packages]
+include = ["AoC_2024", "AoC_2024.Days"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["AoC_2024"]
+
+[project]
+name = "Advent-of-Code"
+dynamic = ["version"]
+dependencies = [
+  "tqdm",
+]
+
+[project.scripts]
+aoc = "AoC_2024.run:main"

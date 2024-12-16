@@ -12,7 +12,7 @@ from sys import argv
 
 from tqdm import tqdm
 
-from .utils import Grid, Point
+from AoC_2024.utils import Grid, Point
 
 
 DEMO_INPUT = """
@@ -44,7 +44,8 @@ def remap(lines: str) -> list[tuple[int, int], tuple[int, int]]:
     for pv in robot_pos_and_velocities]
 
 
-def part_1(width=101, height=103, default=0):
+def part_1(equations: list[tuple[int, int], tuple[int, int]],
+           width=101, height=103, default=0):
 
     g = Grid([[default] * width] * height)
 
@@ -52,7 +53,7 @@ def part_1(width=101, height=103, default=0):
     robot_to_velocity: dict[int, Point] = {}
     quadrant_to_num_robots: dict[int, int] = defaultdict(int)
 
-    for i, (start, velocity) in enumerate(_equations):
+    for i, (start, velocity) in enumerate(equations):
 
         robot_to_point[i] = pt = Point(*start)
         robot_to_velocity[i] = Point(*velocity)
@@ -87,7 +88,8 @@ def part_1(width=101, height=103, default=0):
     return safety_factor
 
 
-def part_2(width=101, height=103,
+def part_2(equations: list[tuple[int, int], tuple[int, int]],
+           width=101, height=103,
            default='.',
            max_iterations=100_000):
 
@@ -101,7 +103,7 @@ def part_2(width=101, height=103,
     final_t = None
     final_grid = None
 
-    for i, (start, velocity) in enumerate(_equations):
+    for i, (start, velocity) in enumerate(equations):
         robot_to_point[i] = pt = Point(*start)
         robot_to_velocity[i] = Point(*velocity)
 
@@ -150,32 +152,38 @@ def part_2(width=101, height=103,
     return final_t
 
 
-if __name__ == '__main__':
-    if len(argv) <= 1:
-        demo = True
-        input_file = None
-    else:
+def solve(input_file=None):
+    if input_file:
         demo = False
-        input_file = argv[1]
-
-    if demo:
-        INPUT = DEMO_INPUT
-        _width = 11
-        _height = 7
-    else:
+        default = ' '
+        print(f"Solving with input file {input_file}")
         try:
             INPUT = open(input_file).read()
         except FileNotFoundError:
+            print('File not found, using default ...')
             INPUT = open(Path(__file__).parent.parent / 'Inputs' / '14').read()
         _width = 101
         _height = 103
 
+    else:
+        demo = True
+        default = '.'
+        INPUT = DEMO_INPUT
+        _width = 11
+        _height = 7
+
+    print("Solving Day 14 Problem! 🎄")
+
     _equations = remap(INPUT)
 
     # Part 1
-    _safety_factor = part_1(_width, _height)
+    _safety_factor = part_1(_equations, _width, _height)
     print('Part 1:', _safety_factor)
 
     # Part 2
-    _t = part_2(default=' ')
+    _t = part_2(_equations, default=default)
     print('Part 2:', _t)
+
+
+if __name__ == '__main__':
+    solve()
