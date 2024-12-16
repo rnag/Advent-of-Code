@@ -14,26 +14,31 @@ readme = "README.md"
 keywords = ["advent of code", "python", "2024", "challenges"]
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 
 [tool.hatch.version]
-path = "AoC_2024/__init__.py"
+path = "aoc_2024/__init__.py"
 
 [tool.hatch.packages]
-include = ["AoC_2024", "AoC_2024.Days"]
+include = ["aoc_2024", "aoc_2024.Days"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["AoC_2024"]
+packages = ["aoc_2024"]
 
 [project]
 name = "Advent-of-Code"
 dynamic = ["version"]
 dependencies = [
-  "tqdm",
+    "tqdm",
+    "matplotlib",
 ]
 
 [project.scripts]
-aoc = "AoC_2024.run:main"
+aoc = "aoc_2024.run:main"

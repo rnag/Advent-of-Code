@@ -1,19 +1,35 @@
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from enum import Enum
-from numbers import Number
-from typing import NamedTuple
-
+from typing import NamedTuple, TYPE_CHECKING
 
 #################################################################
 # POINTS, VECTORS AND GRIDS
 #################################################################
 
-Point = NamedTuple("Point", [("x", Number), ("y", Number)])
 
-Point.__add__ = lambda self, other: Point(self.x + other.x, self.y + other.y)
-Point.__sub__ = lambda self, other: Point(self.x - other.x, self.y - other.y)
-Point.__mul__ = lambda self, scalar: Point(self.x * scalar, self.y * scalar)
-Point.__rmul__ = lambda self, scalar: self * scalar # for when int comes first
+if TYPE_CHECKING:
+    class Point:
+        # noinspection PyUnusedLocal
+        def __init__(self, x: int, y: int): ...
+
+
+# noinspection PyRedeclaration
+class Point(NamedTuple):
+    x: int
+    y: int
+
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+    def __sub__(self, other):
+        return Point(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, scalar):
+        return Point(self.x * scalar, self.y * scalar)
+
+    def __rmul__(self, scalar):
+        return self * scalar  # for when int comes first
+
 
 def yield_neighbours(self, include_diagonals=True, include_self=False):
     """ Generator to yield neighbouring Points """
@@ -104,6 +120,10 @@ class Grid:
     def cols(self):
         """ Return the grid as columns """
         return list(zip(*self._array))
+
+    @property
+    def rows(self):
+        return self._array
 
     def rows_as_str(self):
         """ Return the grid """

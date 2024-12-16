@@ -8,8 +8,8 @@ def main():
 
     # Try to import the corresponding day module dynamically
     try:
-        # Dynamically import the day script (e.g., AoC_2024.Days.day_14)
-        day_module = import_module(f"AoC_2024.Days.{day_number}")
+        # Dynamically import the day script (e.g., aoc_2024.Days.day_14)
+        day_module = import_module(f"aoc_2024.Days.{day_number}")
         # Call the solution function if it exists in the module
         if hasattr(day_module, "solve"):
             day_module.solve(input_file)

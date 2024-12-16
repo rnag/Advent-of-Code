@@ -12,7 +12,7 @@ from sys import argv
 
 from tqdm import tqdm
 
-from AoC_2024.utils import Grid, Point
+from aoc_2024.utils import Grid, Point
 
 
 DEMO_INPUT = """
