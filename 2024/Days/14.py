@@ -12,7 +12,7 @@ from sys import argv
 
 from tqdm import tqdm
 
-from utils import Grid, Point
+from .utils import Grid, Point
 
 
 DEMO_INPUT = """
@@ -163,7 +163,10 @@ if __name__ == '__main__':
         _width = 11
         _height = 7
     else:
-        INPUT = open(Path(__file__).parent / input_file).read()
+        try:
+            INPUT = open(input_file).read()
+        except FileNotFoundError:
+            INPUT = open(Path(__file__).parent.parent / 'Inputs' / '14').read()
         _width = 101
         _height = 103
 
