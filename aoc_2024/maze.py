@@ -21,6 +21,8 @@ class Maze(Grid):
         super().__init__(grid_array)
 
         point_to_state = {}
+        start = end = Point(0, 0)
+
         for y, row in enumerate(self.rows):
             for x, value in enumerate(row):
                 p = Point(x, y)
@@ -29,10 +31,15 @@ class Maze(Grid):
                 elif value == '.':
                     point_to_state[p] = State.PATH
                 elif value == 'S':
+                    start = p
                     point_to_state[p] = State.START
                 elif value == 'E':
+                    end = p
                     point_to_state[p] = State.END
+
         self.point_to_state = point_to_state
+        self.current_loc = self.start_loc = start
+        self.end_loc = end
 
     def visualize(self):
         """Visualizes the maze using Matplotlib."""
@@ -55,6 +62,48 @@ class Maze(Grid):
 
         # Plot the maze
         plt.figure(figsize=(8, 8))
-        plt.imshow(colored_maze, interpolation="nearest")
+        plt.imshow(colored_maze, interpolation="nearest", cmap="viridis")
         plt.axis("off")  # Turn off the axes
+
+        # Annotate the current location
+        plt.text(
+            self.current_loc.x,  # X coordinate
+            self.current_loc.y,  # Y coordinate
+            "X",  # Label
+            color="blue",  # Text color
+            fontsize=16,  # Font size
+            fontweight="bold",  # Font weight
+            ha="center",  # Horizontal alignment
+            va="center",  # Vertical alignment
+            alpha=0.8,
+            bbox=dict(facecolor="black", edgecolor="none", boxstyle="round,pad=0.4", alpha=0.6)
+        )
+
+        # Annotate the start location
+        plt.text(
+            self.start_loc.x,
+            self.start_loc.y,
+            "S",  # Label for Start
+            color="white",
+            fontsize=16,
+            fontweight="bold",
+            ha="center",
+            va="center",
+            alpha=0.9,
+            # bbox=dict(facecolor="blue", edgecolor="none", boxstyle="round,pad=0.4",
+            #           alpha=0.6)  # Transparent background for S
+        )
+
+        # Annotate the end location
+        plt.text(
+            self.end_loc.x,
+            self.end_loc.y,
+            "E",  # Label for End
+            color="white",
+            fontsize=16,
+            fontweight="bold",
+            ha="center",
+            va="center",
+        )
+
         plt.show()
