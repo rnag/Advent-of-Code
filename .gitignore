@@ -1,5 +1,6 @@
 # Input files (for Advent of Code)
 input
+aoc_*/Inputs
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
